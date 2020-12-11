@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+                xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xsi:schemaLocation="http://www.thymeleaf.org ">
+
+    <head th:include="fragments.html :: header">
+        <title id="pageTitle">View Post</title>
+    </head>
+
+    <body>
+        <!-- Navigation -->
+        <nav th:insert="fragments.html :: navigation" class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top"></nav>
+
+        <!-- Page Content -->
+        <div class="container">
+            <div class="row">
+
+                <!-- Post Content Column -->
+                <div class="col-lg-8">
+
+                    <form method="GET" th:action="@{/post/view}" th:object="${post}">
+                        <div class="form-group">
+                            <input type="hidden" th:field="*{postId}"/>
+                            <h2 th:text="*{title}" class="form-control form-control-lg mt-4"></h2>
+                            <hr>
+                            <span>Content:</span>
+                            <h3 th:text="*{content}" class="form-control"></h3>
+                        </div>
+                    </form>
+
+                    <!-- Comments Form -->
+                    <div class="card my-4">
+                        <h5 class="card-header">Leave a Comment:</h5>
+                        <div class="card-body">
+                            <form method="POST" th:action="@{/post/view/commit}">
+                                <div class="form-group">
+                                    <textarea name="content" class="form-control" rows="3"></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!--Comment -->
+                    <h2>Comments:</h2>
+                    <form method="GET" th:action="@{/post/view/{postId}}">
+                    <div class="card my-4">
+                        <div class="media mb-4" th:each="comment:${comments}">
+                            <div class="media-body" >
+                                <h5 th:text="${comment.content}"></h5>
+                            </div>
+                        </div>
+                        <br>
+                    </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="py-5 bg-dark">
+            <div class="container">
+                <p class="m-0 text-center text-white">Copyright &copy; Blog-Web-Spring-November-Specialist 2020</p>
+            </div>
+        </footer>
+
+        <!-- Bootstrap core JavaScript -->
+        <script src="vendor/jquery/jquery.min.js">
+
+        </script>
+        <script src="vendor/bootstrap/js/bootstrap.bundle.min.js">
+
+        </script>
+    </body>
+
+</html>
